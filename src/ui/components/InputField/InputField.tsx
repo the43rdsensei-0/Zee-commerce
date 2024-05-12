@@ -5,16 +5,30 @@ import { useState } from "react";
 
 type InputFieldProps = {
   type?: "text" | "password" | "number";
-  label: string;
+  label?: string;
   error?: string;
   // isLoading?: boolean;
   disabled?: boolean;
   onInput: (value: string) => void;
   suffixIcon?: string;
   placeholder?: string;
+  prefixIcon?: string;
+  inputWidth?: string;
+  backgroundColor?: string;
 };
 
-export default function InputField({ type, label, error, disabled, onInput, suffixIcon, placeholder }: InputFieldProps) {
+export default function InputField({
+  type,
+  label,
+  error,
+  disabled,
+  onInput,
+  suffixIcon,
+  placeholder,
+  prefixIcon,
+  inputWidth,
+  backgroundColor,
+}: InputFieldProps) {
   const [currentSuffixIcon, setCurrentSuffixIcon] = useState(iconShow);
   const [currentInputType, setCurrentInputType] = useState("password");
 
@@ -31,11 +45,22 @@ export default function InputField({ type, label, error, disabled, onInput, suff
 
   return (
     <div className={styles.input_field_wrapper}>
-      <label htmlFor="input">{label}</label>
+      {label ? (
+        <label className={styles.label} htmlFor="input">
+          {label}
+        </label>
+      ) : null}
 
-      <div className={styles.input_wrapper}>
+      <div className={styles.input_wrapper} style={backgroundColor ? { background: backgroundColor } : undefined}>
+        {prefixIcon ? (
+          <span className={styles.prefix_icon}>
+            <img src={prefixIcon} alt="" />
+          </span>
+        ) : null}
+
         <input
           type={type === "password" ? currentInputType : type}
+          style={inputWidth ? { width: inputWidth } : undefined}
           id="input"
           onChange={(e) => onInput(e.target.value)}
           disabled={disabled}
@@ -48,7 +73,7 @@ export default function InputField({ type, label, error, disabled, onInput, suff
         ) : null}
 
         {suffixIcon ? (
-          <span className={styles.suffix_icon} onClick={handleChangeSuffixIcon}>
+          <span className={styles.suffix_icon}>
             <img src={suffixIcon} alt="" />
           </span>
         ) : null}
