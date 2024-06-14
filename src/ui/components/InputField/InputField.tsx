@@ -7,7 +7,6 @@ type InputFieldProps = {
   type?: "text" | "password" | "number";
   label?: string;
   error?: string;
-  // isLoading?: boolean;
   disabled?: boolean;
   onInput: (value: string) => void;
   suffixIcon?: string;
